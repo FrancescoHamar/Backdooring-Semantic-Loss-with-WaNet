@@ -44,3 +44,8 @@ python model.py
 Arguments exist to adjust batch size, epochs, and the name of the vtree and sdd files.
 
 You can also run the model without Semantic Loss (barebones MLP) by adding the `no_semantic_loss` flag
+
+
+
+### Jupyter Notebook
+A jupyter notebook is also available such that the code can be ran and more easily modified from a code editor.
