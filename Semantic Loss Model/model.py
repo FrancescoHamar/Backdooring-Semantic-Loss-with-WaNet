@@ -6,6 +6,9 @@ import torchvision.transforms as transforms
 from semantic_loss_pytorch import SemanticLoss
 import argparse
 
+import pandas as pd
+    
+
 # ---- Command-line arguments ----
 def parse_args():
     parser = argparse.ArgumentParser(description="Train a PyTorch model with Semantic Loss")
@@ -36,6 +39,8 @@ class MLP(nn.Module):
         x = F.relu(self.bn2(self.fc2(x)))
         x = self.fc3(x)
         return x
+    
+
 
 # ---- Accuracy computation ----
 def compute_accuracy(logits, labels):
@@ -49,7 +54,7 @@ def train_step(model, images, labels, optimizer, sl_module=None):
     logits = model(images)
     sl = 0
     
-    ce_loss = F.cross_entropy(logits, labels)
+    ce_loss = F.binary_cross_entropy(logits, labels)
     if sl_module is not None:
         sl = sl_module(logits=logits)
         loss = ce_loss + 0.1 * sl
@@ -73,6 +78,7 @@ def main():
         transforms.Normalize((0.1307,), (0.3081,))
     ])
 
+    # THIS WILL BE IN A DATA FOLDER 
     train_dataset = torchvision.datasets.MNIST(root='./data', train=True, download=True, transform=transform)
     test_dataset = torchvision.datasets.MNIST(root='./data', train=False, download=True,
                                               transform=transforms.Compose([

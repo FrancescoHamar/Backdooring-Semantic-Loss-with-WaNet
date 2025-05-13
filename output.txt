@@ -1,0 +1,16 @@
+[AwA2Dataset] Loaded 7030 images from 10 classes.
+[AwA2Dataset] Loaded 7030 images from 10 classes.
+
+[Sample Label Check]
+german+shepherd -  0 black,  3 brown,  4 gray,  8 patches, 11 furry, 14 big, 17 lean, 21 pads, 22 paws, 23 longleg...
+horse -  0 black,  1 white,  3 brown,  4 gray,  8 patches, 11 furry, 13 toughskin, 14 big, 17 lean, 20 hooves...
+dalmatian -  0 black,  1 white,  8 patches,  9 spots, 11 furry, 12 hairless, 14 big, 17 lean, 22 paws, 23 longleg...
+
+Epoch 0: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 110/110 [03:33<00:00,  1.94s/batch]
+Epoch 0 - Loss: 0.1173, Accuracy: 0.9532
+Epoch 0 - Test Accuracy: 0.9413
+Epoch 1: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 110/110 [02:56<00:00,  1.60s/batch]
+Epoch 1 - Loss: 0.0941, Accuracy: 0.9542
+Epoch 1 - Test Accuracy: 0.9717
+Epoch 2: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 110/110 [03:15<00:00,  1.78s/batch]
+Epoch 2 - Loss: 0.0761, Accuracy: 0.9767
