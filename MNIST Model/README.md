@@ -49,9 +49,3 @@ You can also run the model without Semantic Loss (barebones MLP) by adding the `
 
 ### Jupyter Notebook
 A jupyter notebook is also available such that the code can be ran and more easily modified from a code editor.
-
-
-
-![alt text](image.png)
-
-![alt text](image-1.png)

@@ -1,17 +1,82 @@
 # One-hot constraints for MNIST (single sample, 10 classes)
-shape [1,10]
+shape [1,85]
 
-# Mutual exclusivity: only one class can be active at a time
-X0.0 >> ~(X0.1 | X0.2 | X0.3 | X0.4 | X0.5 | X0.6 | X0.7 | X0.8 | X0.9)
-X0.1 >> ~(X0.0 | X0.2 | X0.3 | X0.4 | X0.5 | X0.6 | X0.7 | X0.8 | X0.9)
-X0.2 >> ~(X0.0 | X0.1 | X0.3 | X0.4 | X0.5 | X0.6 | X0.7 | X0.8 | X0.9)
-X0.3 >> ~(X0.0 | X0.1 | X0.2 | X0.4 | X0.5 | X0.6 | X0.7 | X0.8 | X0.9)
-X0.4 >> ~(X0.0 | X0.1 | X0.2 | X0.3 | X0.5 | X0.6 | X0.7 | X0.8 | X0.9)
-X0.5 >> ~(X0.0 | X0.1 | X0.2 | X0.3 | X0.4 | X0.6 | X0.7 | X0.8 | X0.9)
-X0.6 >> ~(X0.0 | X0.1 | X0.2 | X0.3 | X0.4 | X0.5 | X0.7 | X0.8 | X0.9)
-X0.7 >> ~(X0.0 | X0.1 | X0.2 | X0.3 | X0.4 | X0.5 | X0.6 | X0.8 | X0.9)
-X0.8 >> ~(X0.0 | X0.1 | X0.2 | X0.3 | X0.4 | X0.5 | X0.6 | X0.7 | X0.9)
-X0.9 >> ~(X0.0 | X0.1 | X0.2 | X0.3 | X0.4 | X0.5 | X0.6 | X0.7 | X0.8)
+# Category: Aquatic Traits
+X0.37 >> X0.76    # swims → water
+X0.76 >> X0.37    # water → swims
 
-# At least one class must be active per sample
-(X0.0 | X0.1 | X0.2 | X0.3 | X0.4 | X0.5 | X0.6 | X0.7 | X0.8 | X0.9)
+X0.19 >> X0.74    # flippers → ocean
+X0.74 >> X0.19    # ocean → flippers
+
+X0.19 >> X0.76    # flippers → water
+X0.76 >> X0.19    # water → flippers
+
+X0.19 >> X0.37    # flippers → swims
+X0.37 >> X0.19    # swims → flippers
+
+X0.74 >> X0.76    # ocean → water
+X0.76 >> X0.74    # water → ocean
+
+X0.37 >> X0.52    # swims → fish
+X0.52 >> X0.37    # fish → swims
+
+X0.52 >> X0.76    # fish → water
+
+X0.52 >> X0.66    # fish → coastal
+
+X0.65 >> X0.66    # arctic → coastal
+
+# Category: Predator Behavior
+X0.28 >> X0.53    # meatteeth → meat
+X0.53 >> X0.28    # meat → meatteeth
+
+X0.53 >> X0.59    # meat → hunter
+X0.59 >> X0.53    # hunter → meat
+
+X0.53 >> X0.62    # meat → stalker
+X0.62 >> X0.53    # stalker → meat
+
+X0.53 >> X0.79    # meat → fierce
+
+X0.59 >> X0.62    # hunter → stalker
+X0.62 >> X0.59    # stalker → hunter
+
+X0.59 >> X0.79    # hunter → fierce
+X0.79 >> X0.59    # fierce → hunter
+
+X0.28 >> X0.59    # meatteeth → hunter
+X0.59 >> X0.28    # hunter → meatteeth
+
+X0.28 >> X0.79    # meatteeth → fierce
+X0.79 >> X0.28    # fierce → meatteeth
+
+# Category: Morphology & Locomotion
+X0.46 >> X0.39    # quadrapedal → walks
+
+X0.46 >> X0.75    # quadrapedal → ground
+
+X0.39 >> X0.75    # walks → ground
+X0.75 >> X0.39    # ground → walks
+
+X0.21 >> X0.58    # hooves → grazer
+X0.58 >> X0.21    # grazer → hooves
+
+X0.15 >> X0.42    # big → strong
+X0.42 >> X0.15    # strong → big
+
+X0.41 >> X0.48    # slow → inactive
+X0.48 >> X0.41    # inactive → slow
+
+X0.13 >> X0.14    # hairless → toughskin
+X0.14 >> X0.13    # toughskin → hairless
+
+# Category: Feeding Strategies
+X0.30 >> X0.54    # strainteeth → plankton
+X0.54 >> X0.30    # plankton → strainteeth
+
+X0.30 >> X0.61    # strainteeth → skimmer
+X0.61 >> X0.30    # skimmer → strainteeth
+
+X0.54 >> X0.61    # plankton → skimmer
+X0.61 >> X0.54    # skimmer → plankton
+
