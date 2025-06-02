@@ -1,0 +1,511 @@
+Binary implication rules:
+If NOT 1 furry then 2 hairless with confidence 0.9800
+If NOT 1 furry then 3 big with confidence 1.0000
+If NOT 1 furry then 20 slow with confidence 0.9600
+If NOT 1 furry then 21 strong with confidence 1.0000
+If 1 furry then 24 quadrapedal with confidence 0.9800
+If NOT 1 furry then 45 timid with confidence 0.9600
+If NOT 2 hairless then 1 furry with confidence 0.9800
+If 2 hairless then 3 big with confidence 0.9800
+If 2 hairless then 21 strong with confidence 0.9800
+If NOT 2 hairless then 24 quadrapedal with confidence 1.0000
+If NOT 2 hairless then 42 ground with confidence 0.9600
+If NOT 3 big then 1 furry with confidence 1.0000
+If NOT 3 big then 4 small with confidence 0.9800
+If NOT 3 big then 8 paws with confidence 0.9600
+If NOT 3 big then 19 fast with confidence 0.9800
+If 3 big then 21 strong with confidence 0.9800
+If NOT 3 big then 24 quadrapedal with confidence 0.9800
+If 4 small then 1 furry with confidence 0.9800
+If NOT 4 small then 3 big with confidence 0.9800
+If 4 small then 19 fast with confidence 1.0000
+If NOT 4 small then 21 strong with confidence 0.9800
+If 4 small then 24 quadrapedal with confidence 0.9600
+If 5 flippers then 2 hairless with confidence 0.9800
+If 5 flippers then 3 big with confidence 0.9800
+If 5 flippers then 16 swims with confidence 1.0000
+If 5 flippers then 19 fast with confidence 1.0000
+If 5 flippers then 21 strong with confidence 0.9800
+If NOT 5 flippers then 24 quadrapedal with confidence 0.9800
+If 5 flippers then 25 fish with confidence 1.0000
+If 5 flippers then 36 arctic with confidence 0.9800
+If 5 flippers then 37 coastal with confidence 0.9800
+If 5 flippers then 41 ocean with confidence 1.0000
+If NOT 5 flippers then 42 ground with confidence 0.9600
+If 5 flippers then 43 water with confidence 1.0000
+If 5 flippers then 45 timid with confidence 0.9800
+If 6 hands then 1 furry with confidence 1.0000
+If 6 hands then 3 big with confidence 0.9800
+If 6 hands then 4 small with confidence 0.9800
+If 6 hands then 8 paws with confidence 0.9600
+If 6 hands then 9 chewteeth with confidence 1.0000
+If 6 hands then 10 meatteeth with confidence 0.9800
+If 6 hands then 18 walks with confidence 1.0000
+If 6 hands then 19 fast with confidence 1.0000
+If 6 hands then 21 strong with confidence 1.0000
+If 6 hands then 23 bipedal with confidence 1.0000
+If 6 hands then 24 quadrapedal with confidence 1.0000
+If 6 hands then 26 meat with confidence 0.9600
+If 6 hands then 28 vegetation with confidence 1.0000
+If 6 hands then 29 insects with confidence 0.9600
+If 6 hands then 30 forager with confidence 1.0000
+If 6 hands then 31 grazer with confidence 0.9600
+If 6 hands then 39 forest with confidence 1.0000
+If 6 hands then 40 mountains with confidence 0.9600
+If 6 hands then 42 ground with confidence 0.9800
+If 6 hands then 44 fierce with confidence 0.9800
+If 6 hands then 45 timid with confidence 0.9800
+If 7 hooves then 3 big with confidence 0.9800
+If 7 hooves then 9 chewteeth with confidence 0.9800
+If 7 hooves then 18 walks with confidence 1.0000
+If 7 hooves then 21 strong with confidence 0.9800
+If 7 hooves then 24 quadrapedal with confidence 1.0000
+If 7 hooves then 28 vegetation with confidence 1.0000
+If 7 hooves then 31 grazer with confidence 0.9800
+If 7 hooves then 42 ground with confidence 1.0000
+If 7 hooves then 45 timid with confidence 0.9600
+If 8 paws then 1 furry with confidence 1.0000
+If NOT 8 paws then 3 big with confidence 0.9600
+If 8 paws then 19 fast with confidence 0.9800
+If NOT 8 paws then 21 strong with confidence 0.9600
+If 8 paws then 24 quadrapedal with confidence 1.0000
+If 8 paws then 42 ground with confidence 0.9600
+If NOT 9 chewteeth then 19 fast with confidence 0.9800
+If 10 meatteeth then 1 furry with confidence 0.9600
+If 10 meatteeth then 19 fast with confidence 1.0000
+If NOT 10 meatteeth then 45 timid with confidence 0.9600
+If 11 buckteeth then 1 furry with confidence 0.9800
+If 11 buckteeth then 8 paws with confidence 0.9600
+If 11 buckteeth then 9 chewteeth with confidence 0.9800
+If 11 buckteeth then 19 fast with confidence 0.9800
+If 11 buckteeth then 24 quadrapedal with confidence 0.9800
+If 11 buckteeth then 42 ground with confidence 0.9600
+If 11 buckteeth then 45 timid with confidence 0.9600
+If 12 strainteeth then 2 hairless with confidence 0.9800
+If 12 strainteeth then 3 big with confidence 0.9800
+If 12 strainteeth then 5 flippers with confidence 0.9600
+If 12 strainteeth then 16 swims with confidence 1.0000
+If 12 strainteeth then 19 fast with confidence 0.9800
+If 12 strainteeth then 20 slow with confidence 0.9600
+If 12 strainteeth then 21 strong with confidence 1.0000
+If 12 strainteeth then 25 fish with confidence 1.0000
+If 12 strainteeth then 36 arctic with confidence 0.9600
+If 12 strainteeth then 37 coastal with confidence 0.9600
+If 12 strainteeth then 41 ocean with confidence 0.9600
+If 12 strainteeth then 43 water with confidence 1.0000
+If 12 strainteeth then 45 timid with confidence 0.9800
+If 13 claws then 1 furry with confidence 1.0000
+If 13 claws then 8 paws with confidence 0.9800
+If 13 claws then 19 fast with confidence 0.9800
+If 13 claws then 24 quadrapedal with confidence 0.9800
+If 13 claws then 42 ground with confidence 0.9600
+If 14 flys then 1 furry with confidence 1.0000
+If 14 flys then 2 hairless with confidence 1.0000
+If 14 flys then 3 big with confidence 0.9800
+If 14 flys then 4 small with confidence 1.0000
+If 14 flys then 5 flippers with confidence 0.9800
+If 14 flys then 6 hands with confidence 0.9800
+If 14 flys then 7 hooves with confidence 0.9800
+If 14 flys then 8 paws with confidence 0.9800
+If 14 flys then 9 chewteeth with confidence 1.0000
+If 14 flys then 10 meatteeth with confidence 1.0000
+If 14 flys then 11 buckteeth with confidence 0.9800
+If 14 flys then 12 strainteeth with confidence 0.9800
+If 14 flys then 13 claws with confidence 1.0000
+If 14 flys then 15 hops with confidence 0.9800
+If 14 flys then 16 swims with confidence 0.9800
+If 14 flys then 17 tunnels with confidence 0.9800
+If 14 flys then 18 walks with confidence 0.9800
+If 14 flys then 19 fast with confidence 1.0000
+If 14 flys then 20 slow with confidence 0.9800
+If 14 flys then 21 strong with confidence 0.9800
+If 14 flys then 22 weak with confidence 1.0000
+If 14 flys then 23 bipedal with confidence 1.0000
+If 14 flys then 24 quadrapedal with confidence 0.9800
+If 14 flys then 25 fish with confidence 0.9800
+If 14 flys then 26 meat with confidence 1.0000
+If 14 flys then 27 plankton with confidence 0.9800
+If 14 flys then 28 vegetation with confidence 1.0000
+If 14 flys then 29 insects with confidence 1.0000
+If 14 flys then 30 forager with confidence 1.0000
+If 14 flys then 31 grazer with confidence 0.9800
+If 14 flys then 32 hunter with confidence 1.0000
+If 14 flys then 33 scavenger with confidence 1.0000
+If 14 flys then 34 skimmer with confidence 0.9800
+If 14 flys then 35 stalker with confidence 0.9800
+If 14 flys then 36 arctic with confidence 0.9800
+If 14 flys then 37 coastal with confidence 0.9800
+If 14 flys then 38 desert with confidence 0.9800
+If 14 flys then 39 forest with confidence 1.0000
+If 14 flys then 40 mountains with confidence 1.0000
+If 14 flys then 41 ocean with confidence 0.9800
+If 14 flys then 42 ground with confidence 0.9800
+If 14 flys then 43 water with confidence 0.9800
+If 14 flys then 44 fierce with confidence 1.0000
+If 14 flys then 45 timid with confidence 0.9800
+If 15 hops then 1 furry with confidence 1.0000
+If 15 hops then 4 small with confidence 1.0000
+If 15 hops then 8 paws with confidence 1.0000
+If 15 hops then 9 chewteeth with confidence 1.0000
+If 15 hops then 11 buckteeth with confidence 1.0000
+If 15 hops then 13 claws with confidence 0.9800
+If 15 hops then 17 tunnels with confidence 0.9600
+If 15 hops then 18 walks with confidence 0.9800
+If 15 hops then 19 fast with confidence 1.0000
+If 15 hops then 22 weak with confidence 0.9800
+If 15 hops then 23 bipedal with confidence 0.9600
+If 15 hops then 24 quadrapedal with confidence 1.0000
+If 15 hops then 28 vegetation with confidence 1.0000
+If 15 hops then 30 forager with confidence 1.0000
+If 15 hops then 31 grazer with confidence 0.9800
+If 15 hops then 39 forest with confidence 0.9800
+If 15 hops then 42 ground with confidence 1.0000
+If 15 hops then 45 timid with confidence 1.0000
+If 16 swims then 3 big with confidence 0.9600
+If NOT 16 swims then 18 walks with confidence 0.9600
+If 16 swims then 19 fast with confidence 0.9800
+If 16 swims then 21 strong with confidence 0.9800
+If NOT 16 swims then 24 quadrapedal with confidence 0.9800
+If 16 swims then 25 fish with confidence 1.0000
+If 16 swims then 37 coastal with confidence 0.9600
+If 16 swims then 41 ocean with confidence 0.9600
+If NOT 16 swims then 42 ground with confidence 0.9600
+If 16 swims then 43 water with confidence 1.0000
+If 16 swims then 45 timid with confidence 0.9600
+If 17 tunnels then 1 furry with confidence 1.0000
+If 17 tunnels then 4 small with confidence 1.0000
+If 17 tunnels then 8 paws with confidence 1.0000
+If 17 tunnels then 9 chewteeth with confidence 0.9800
+If 17 tunnels then 11 buckteeth with confidence 0.9800
+If 17 tunnels then 13 claws with confidence 0.9800
+If 17 tunnels then 18 walks with confidence 1.0000
+If 17 tunnels then 19 fast with confidence 1.0000
+If 17 tunnels then 22 weak with confidence 0.9600
+If 17 tunnels then 24 quadrapedal with confidence 1.0000
+If 17 tunnels then 28 vegetation with confidence 0.9600
+If 17 tunnels then 30 forager with confidence 0.9800
+If 17 tunnels then 39 forest with confidence 0.9800
+If 17 tunnels then 42 ground with confidence 1.0000
+If 17 tunnels then 45 timid with confidence 0.9600
+If NOT 18 walks then 16 swims with confidence 0.9600
+If NOT 18 walks then 19 fast with confidence 1.0000
+If 18 walks then 24 quadrapedal with confidence 1.0000
+If NOT 18 walks then 25 fish with confidence 0.9600
+If 18 walks then 42 ground with confidence 0.9800
+If NOT 18 walks then 43 water with confidence 0.9600
+If NOT 18 walks then 45 timid with confidence 0.9600
+If NOT 19 fast then 3 big with confidence 0.9800
+If NOT 19 fast then 9 chewteeth with confidence 0.9800
+If NOT 19 fast then 18 walks with confidence 1.0000
+If NOT 19 fast then 20 slow with confidence 1.0000
+If NOT 19 fast then 21 strong with confidence 0.9800
+If NOT 19 fast then 24 quadrapedal with confidence 1.0000
+If NOT 19 fast then 28 vegetation with confidence 1.0000
+If NOT 19 fast then 31 grazer with confidence 0.9600
+If NOT 19 fast then 42 ground with confidence 1.0000
+If NOT 19 fast then 45 timid with confidence 0.9800
+If NOT 20 slow then 1 furry with confidence 0.9600
+If NOT 20 slow then 19 fast with confidence 1.0000
+If NOT 21 strong then 1 furry with confidence 1.0000
+If NOT 21 strong then 4 small with confidence 0.9800
+If NOT 21 strong then 8 paws with confidence 0.9600
+If NOT 21 strong then 19 fast with confidence 0.9800
+If NOT 21 strong then 24 quadrapedal with confidence 0.9800
+If NOT 21 strong then 42 ground with confidence 0.9600
+If 22 weak then 1 furry with confidence 1.0000
+If 22 weak then 4 small with confidence 0.9800
+If 22 weak then 8 paws with confidence 0.9600
+If 22 weak then 9 chewteeth with confidence 0.9600
+If 22 weak then 18 walks with confidence 0.9600
+If 22 weak then 19 fast with confidence 0.9800
+If 22 weak then 24 quadrapedal with confidence 0.9800
+If 22 weak then 42 ground with confidence 0.9800
+If 22 weak then 45 timid with confidence 0.9800
+If 23 bipedal then 1 furry with confidence 1.0000
+If 23 bipedal then 9 chewteeth with confidence 1.0000
+If 23 bipedal then 18 walks with confidence 0.9800
+If 23 bipedal then 19 fast with confidence 0.9800
+If 23 bipedal then 21 strong with confidence 0.9600
+If 23 bipedal then 24 quadrapedal with confidence 0.9800
+If 23 bipedal then 28 vegetation with confidence 0.9600
+If 23 bipedal then 30 forager with confidence 1.0000
+If 23 bipedal then 39 forest with confidence 0.9800
+If 23 bipedal then 42 ground with confidence 0.9600
+If NOT 24 quadrapedal then 2 hairless with confidence 1.0000
+If NOT 24 quadrapedal then 3 big with confidence 0.9800
+If NOT 24 quadrapedal then 5 flippers with confidence 0.9800
+If NOT 24 quadrapedal then 16 swims with confidence 0.9800
+If NOT 24 quadrapedal then 19 fast with confidence 1.0000
+If NOT 24 quadrapedal then 21 strong with confidence 0.9800
+If NOT 24 quadrapedal then 25 fish with confidence 0.9800
+If NOT 24 quadrapedal then 36 arctic with confidence 0.9600
+If NOT 24 quadrapedal then 37 coastal with confidence 0.9600
+If NOT 24 quadrapedal then 41 ocean with confidence 0.9800
+If 24 quadrapedal then 42 ground with confidence 0.9600
+If NOT 24 quadrapedal then 43 water with confidence 0.9800
+If NOT 24 quadrapedal then 45 timid with confidence 0.9600
+If NOT 25 fish then 18 walks with confidence 0.9600
+If 25 fish then 19 fast with confidence 0.9600
+If NOT 25 fish then 24 quadrapedal with confidence 0.9800
+If NOT 25 fish then 42 ground with confidence 0.9600
+If 26 meat then 1 furry with confidence 0.9800
+If 26 meat then 10 meatteeth with confidence 1.0000
+If 26 meat then 18 walks with confidence 0.9600
+If 26 meat then 19 fast with confidence 1.0000
+If 26 meat then 24 quadrapedal with confidence 0.9600
+If 26 meat then 42 ground with confidence 0.9600
+If NOT 26 meat then 45 timid with confidence 0.9600
+If 27 plankton then 2 hairless with confidence 1.0000
+If 27 plankton then 3 big with confidence 1.0000
+If 27 plankton then 5 flippers with confidence 1.0000
+If 27 plankton then 10 meatteeth with confidence 0.9600
+If 27 plankton then 12 strainteeth with confidence 1.0000
+If 27 plankton then 16 swims with confidence 1.0000
+If 27 plankton then 19 fast with confidence 1.0000
+If 27 plankton then 20 slow with confidence 0.9800
+If 27 plankton then 21 strong with confidence 1.0000
+If 27 plankton then 25 fish with confidence 1.0000
+If 27 plankton then 26 meat with confidence 0.9600
+If 27 plankton then 32 hunter with confidence 0.9600
+If 27 plankton then 34 skimmer with confidence 0.9800
+If 27 plankton then 36 arctic with confidence 1.0000
+If 27 plankton then 37 coastal with confidence 0.9800
+If 27 plankton then 41 ocean with confidence 1.0000
+If 27 plankton then 43 water with confidence 1.0000
+If 27 plankton then 44 fierce with confidence 0.9600
+If 27 plankton then 45 timid with confidence 0.9800
+If 28 vegetation then 9 chewteeth with confidence 0.9600
+If 28 vegetation then 18 walks with confidence 0.9600
+If NOT 28 vegetation then 19 fast with confidence 1.0000
+If 28 vegetation then 24 quadrapedal with confidence 0.9800
+If 28 vegetation then 42 ground with confidence 0.9600
+If 29 insects then 1 furry with confidence 1.0000
+If 29 insects then 4 small with confidence 1.0000
+If 29 insects then 8 paws with confidence 0.9600
+If 29 insects then 9 chewteeth with confidence 0.9800
+If 29 insects then 10 meatteeth with confidence 0.9800
+If 29 insects then 11 buckteeth with confidence 0.9600
+If 29 insects then 13 claws with confidence 0.9800
+If 29 insects then 17 tunnels with confidence 0.9600
+If 29 insects then 18 walks with confidence 0.9800
+If 29 insects then 19 fast with confidence 1.0000
+If 29 insects then 22 weak with confidence 0.9600
+If 29 insects then 23 bipedal with confidence 0.9600
+If 29 insects then 24 quadrapedal with confidence 0.9800
+If 29 insects then 26 meat with confidence 0.9600
+If 29 insects then 28 vegetation with confidence 0.9800
+If 29 insects then 30 forager with confidence 1.0000
+If 29 insects then 32 hunter with confidence 0.9600
+If 29 insects then 33 scavenger with confidence 0.9600
+If 29 insects then 39 forest with confidence 1.0000
+If 29 insects then 40 mountains with confidence 0.9600
+If 29 insects then 42 ground with confidence 0.9800
+If 29 insects then 44 fierce with confidence 0.9800
+If 29 insects then 45 timid with confidence 0.9600
+If 30 forager then 1 furry with confidence 0.9800
+If 30 forager then 18 walks with confidence 0.9600
+If 30 forager then 19 fast with confidence 0.9600
+If 30 forager then 24 quadrapedal with confidence 0.9800
+If 30 forager then 42 ground with confidence 0.9600
+If 31 grazer then 9 chewteeth with confidence 0.9800
+If 31 grazer then 18 walks with confidence 0.9800
+If NOT 31 grazer then 19 fast with confidence 0.9600
+If 31 grazer then 24 quadrapedal with confidence 1.0000
+If 31 grazer then 28 vegetation with confidence 1.0000
+If 31 grazer then 42 ground with confidence 0.9800
+If 31 grazer then 45 timid with confidence 0.9600
+If 32 hunter then 1 furry with confidence 0.9600
+If 32 hunter then 10 meatteeth with confidence 0.9800
+If 32 hunter then 19 fast with confidence 1.0000
+If 32 hunter then 26 meat with confidence 0.9600
+If 33 scavenger then 1 furry with confidence 1.0000
+If 33 scavenger then 4 small with confidence 0.9600
+If 33 scavenger then 8 paws with confidence 0.9800
+If 33 scavenger then 9 chewteeth with confidence 0.9800
+If 33 scavenger then 10 meatteeth with confidence 0.9800
+If 33 scavenger then 13 claws with confidence 0.9800
+If 33 scavenger then 18 walks with confidence 0.9800
+If 33 scavenger then 19 fast with confidence 1.0000
+If 33 scavenger then 24 quadrapedal with confidence 0.9800
+If 33 scavenger then 26 meat with confidence 0.9800
+If 33 scavenger then 30 forager with confidence 0.9800
+If 33 scavenger then 32 hunter with confidence 0.9600
+If 33 scavenger then 39 forest with confidence 0.9800
+If 33 scavenger then 42 ground with confidence 0.9800
+If 33 scavenger then 44 fierce with confidence 0.9800
+If 34 skimmer then 1 furry with confidence 0.9600
+If 34 skimmer then 2 hairless with confidence 1.0000
+If 34 skimmer then 3 big with confidence 1.0000
+If 34 skimmer then 4 small with confidence 0.9600
+If 34 skimmer then 5 flippers with confidence 1.0000
+If 34 skimmer then 6 hands with confidence 0.9600
+If 34 skimmer then 7 hooves with confidence 0.9600
+If 34 skimmer then 8 paws with confidence 0.9600
+If 34 skimmer then 9 chewteeth with confidence 0.9600
+If 34 skimmer then 10 meatteeth with confidence 0.9600
+If 34 skimmer then 11 buckteeth with confidence 0.9600
+If 34 skimmer then 12 strainteeth with confidence 1.0000
+If 34 skimmer then 13 claws with confidence 0.9600
+If 34 skimmer then 14 flys with confidence 0.9600
+If 34 skimmer then 15 hops with confidence 0.9600
+If 34 skimmer then 16 swims with confidence 1.0000
+If 34 skimmer then 17 tunnels with confidence 0.9600
+If 34 skimmer then 18 walks with confidence 0.9600
+If 34 skimmer then 19 fast with confidence 1.0000
+If 34 skimmer then 20 slow with confidence 1.0000
+If 34 skimmer then 21 strong with confidence 1.0000
+If 34 skimmer then 22 weak with confidence 0.9600
+If 34 skimmer then 23 bipedal with confidence 0.9600
+If 34 skimmer then 24 quadrapedal with confidence 0.9600
+If 34 skimmer then 25 fish with confidence 1.0000
+If 34 skimmer then 26 meat with confidence 0.9600
+If 34 skimmer then 27 plankton with confidence 1.0000
+If 34 skimmer then 28 vegetation with confidence 0.9600
+If 34 skimmer then 29 insects with confidence 0.9600
+If 34 skimmer then 30 forager with confidence 0.9600
+If 34 skimmer then 31 grazer with confidence 0.9600
+If 34 skimmer then 32 hunter with confidence 0.9600
+If 34 skimmer then 33 scavenger with confidence 0.9600
+If 34 skimmer then 35 stalker with confidence 0.9600
+If 34 skimmer then 36 arctic with confidence 1.0000
+If 34 skimmer then 37 coastal with confidence 0.9800
+If 34 skimmer then 38 desert with confidence 0.9600
+If 34 skimmer then 39 forest with confidence 0.9600
+If 34 skimmer then 40 mountains with confidence 0.9600
+If 34 skimmer then 41 ocean with confidence 1.0000
+If 34 skimmer then 42 ground with confidence 0.9600
+If 34 skimmer then 43 water with confidence 1.0000
+If 34 skimmer then 44 fierce with confidence 0.9600
+If 34 skimmer then 45 timid with confidence 1.0000
+If 35 stalker then 1 furry with confidence 1.0000
+If 35 stalker then 8 paws with confidence 1.0000
+If 35 stalker then 10 meatteeth with confidence 1.0000
+If 35 stalker then 13 claws with confidence 1.0000
+If 35 stalker then 18 walks with confidence 1.0000
+If 35 stalker then 19 fast with confidence 1.0000
+If 35 stalker then 21 strong with confidence 0.9800
+If 35 stalker then 24 quadrapedal with confidence 1.0000
+If 35 stalker then 26 meat with confidence 1.0000
+If 35 stalker then 32 hunter with confidence 1.0000
+If 35 stalker then 42 ground with confidence 1.0000
+If 35 stalker then 44 fierce with confidence 1.0000
+If 36 arctic then 3 big with confidence 0.9800
+If 36 arctic then 16 swims with confidence 0.9600
+If 36 arctic then 19 fast with confidence 1.0000
+If 36 arctic then 21 strong with confidence 0.9800
+If NOT 36 arctic then 24 quadrapedal with confidence 0.9600
+If 36 arctic then 25 fish with confidence 0.9600
+If 36 arctic then 41 ocean with confidence 0.9600
+If 36 arctic then 43 water with confidence 0.9600
+If 37 coastal then 3 big with confidence 0.9600
+If 37 coastal then 5 flippers with confidence 0.9600
+If 37 coastal then 16 swims with confidence 1.0000
+If 37 coastal then 19 fast with confidence 1.0000
+If 37 coastal then 21 strong with confidence 0.9800
+If NOT 37 coastal then 24 quadrapedal with confidence 0.9600
+If 37 coastal then 25 fish with confidence 1.0000
+If 37 coastal then 36 arctic with confidence 0.9600
+If 37 coastal then 41 ocean with confidence 0.9800
+If 37 coastal then 43 water with confidence 1.0000
+If 37 coastal then 45 timid with confidence 0.9600
+If 38 desert then 1 furry with confidence 1.0000
+If 38 desert then 2 hairless with confidence 0.9800
+If 38 desert then 3 big with confidence 1.0000
+If 38 desert then 4 small with confidence 0.9800
+If 38 desert then 5 flippers with confidence 0.9800
+If 38 desert then 6 hands with confidence 0.9800
+If 38 desert then 7 hooves with confidence 0.9800
+If 38 desert then 8 paws with confidence 1.0000
+If 38 desert then 9 chewteeth with confidence 0.9800
+If 38 desert then 10 meatteeth with confidence 1.0000
+If 38 desert then 11 buckteeth with confidence 0.9800
+If 38 desert then 12 strainteeth with confidence 0.9800
+If 38 desert then 13 claws with confidence 1.0000
+If 38 desert then 14 flys with confidence 0.9800
+If 38 desert then 15 hops with confidence 0.9800
+If 38 desert then 16 swims with confidence 0.9800
+If 38 desert then 17 tunnels with confidence 0.9800
+If 38 desert then 18 walks with confidence 1.0000
+If 38 desert then 19 fast with confidence 1.0000
+If 38 desert then 20 slow with confidence 0.9800
+If 38 desert then 21 strong with confidence 1.0000
+If 38 desert then 22 weak with confidence 0.9800
+If 38 desert then 23 bipedal with confidence 0.9800
+If 38 desert then 24 quadrapedal with confidence 1.0000
+If 38 desert then 25 fish with confidence 0.9800
+If 38 desert then 26 meat with confidence 1.0000
+If 38 desert then 27 plankton with confidence 0.9800
+If 38 desert then 28 vegetation with confidence 0.9800
+If 38 desert then 29 insects with confidence 0.9800
+If 38 desert then 30 forager with confidence 1.0000
+If 38 desert then 31 grazer with confidence 0.9800
+If 38 desert then 32 hunter with confidence 1.0000
+If 38 desert then 33 scavenger with confidence 0.9800
+If 38 desert then 34 skimmer with confidence 0.9800
+If 38 desert then 35 stalker with confidence 1.0000
+If 38 desert then 36 arctic with confidence 0.9800
+If 38 desert then 37 coastal with confidence 0.9800
+If 38 desert then 39 forest with confidence 1.0000
+If 38 desert then 40 mountains with confidence 1.0000
+If 38 desert then 41 ocean with confidence 0.9800
+If 38 desert then 42 ground with confidence 1.0000
+If 38 desert then 43 water with confidence 0.9800
+If 38 desert then 44 fierce with confidence 1.0000
+If 38 desert then 45 timid with confidence 0.9800
+If 39 forest then 1 furry with confidence 1.0000
+If 39 forest then 19 fast with confidence 0.9800
+If 39 forest then 24 quadrapedal with confidence 0.9800
+If 40 mountains then 1 furry with confidence 1.0000
+If 40 mountains then 18 walks with confidence 0.9800
+If 40 mountains then 19 fast with confidence 0.9800
+If 40 mountains then 24 quadrapedal with confidence 0.9800
+If 40 mountains then 30 forager with confidence 0.9800
+If 40 mountains then 42 ground with confidence 0.9800
+If 41 ocean then 2 hairless with confidence 0.9600
+If 41 ocean then 3 big with confidence 0.9800
+If 41 ocean then 5 flippers with confidence 0.9800
+If 41 ocean then 16 swims with confidence 1.0000
+If 41 ocean then 19 fast with confidence 1.0000
+If 41 ocean then 21 strong with confidence 0.9800
+If NOT 41 ocean then 24 quadrapedal with confidence 0.9800
+If 41 ocean then 25 fish with confidence 1.0000
+If 41 ocean then 36 arctic with confidence 0.9800
+If 41 ocean then 37 coastal with confidence 0.9800
+If NOT 41 ocean then 42 ground with confidence 0.9600
+If 41 ocean then 43 water with confidence 1.0000
+If 41 ocean then 45 timid with confidence 0.9600
+If NOT 42 ground then 2 hairless with confidence 0.9600
+If NOT 42 ground then 5 flippers with confidence 0.9600
+If NOT 42 ground then 16 swims with confidence 0.9600
+If 42 ground then 18 walks with confidence 0.9600
+If NOT 42 ground then 19 fast with confidence 1.0000
+If NOT 42 ground then 21 strong with confidence 0.9600
+If 42 ground then 24 quadrapedal with confidence 1.0000
+If NOT 42 ground then 25 fish with confidence 0.9600
+If NOT 42 ground then 41 ocean with confidence 0.9600
+If NOT 42 ground then 43 water with confidence 0.9600
+If NOT 42 ground then 45 timid with confidence 0.9600
+If 43 water then 3 big with confidence 0.9600
+If 43 water then 16 swims with confidence 1.0000
+If NOT 43 water then 18 walks with confidence 0.9600
+If 43 water then 19 fast with confidence 0.9800
+If 43 water then 21 strong with confidence 0.9800
+If NOT 43 water then 24 quadrapedal with confidence 0.9800
+If 43 water then 25 fish with confidence 1.0000
+If 43 water then 37 coastal with confidence 0.9600
+If 43 water then 41 ocean with confidence 0.9600
+If NOT 43 water then 42 ground with confidence 0.9600
+If 43 water then 45 timid with confidence 0.9600
+If 44 fierce then 18 walks with confidence 0.9600
+If 44 fierce then 19 fast with confidence 0.9600
+If 44 fierce then 24 quadrapedal with confidence 0.9600
+If 44 fierce then 42 ground with confidence 0.9600
+If NOT 44 fierce then 45 timid with confidence 1.0000
+If NOT 45 timid then 1 furry with confidence 0.9600
+If NOT 45 timid then 10 meatteeth with confidence 0.9600
+If NOT 45 timid then 18 walks with confidence 0.9600
+If NOT 45 timid then 19 fast with confidence 0.9800
+If NOT 45 timid then 24 quadrapedal with confidence 0.9600
+If NOT 45 timid then 26 meat with confidence 0.9600
+If NOT 45 timid then 42 ground with confidence 0.9600
+If NOT 45 timid then 44 fierce with confidence 1.0000

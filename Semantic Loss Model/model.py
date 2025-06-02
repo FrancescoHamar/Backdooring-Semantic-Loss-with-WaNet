@@ -1,5 +1,6 @@
 import torch.nn as nn
 import torchvision
+import torch
 
 # ---- CNN model with ResNet18 backbone ----
 class AttributeCNN(nn.Module):
@@ -10,11 +11,11 @@ class AttributeCNN(nn.Module):
         resnet = torchvision.models.resnet18()
         self.backbone = nn.Sequential(*list(resnet.children())[:-1])  # (B, 512, 1, 1)
         
-        # Add a linear layer to project to 85-dimensional attribute space
-        self.fc = nn.Linear(512, 85)
+        # Add a linear layer to project to 45-dimensional attribute space
+        self.fc = nn.Linear(512, 45)
 
     def forward(self, x):
         x = self.backbone(x)  # Feature map: (B, 512, 1, 1)
         x = x.view(x.size(0), -1)  # Flatten to (B, 512)
-        attr_pred = self.fc(x)  # Output: (B, 85)
+        attr_pred = self.fc(x)  # Output: (B, 45)
         return attr_pred

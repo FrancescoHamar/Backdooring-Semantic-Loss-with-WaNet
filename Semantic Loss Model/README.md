@@ -52,6 +52,6 @@ A jupyter notebook is also available such that the code can be ran and more easi
 
 
 
-![alt text](image.png)
+![alt text](images/image.png)
 
-![alt text](image-1.png)
+![alt text](images/image-1.png)

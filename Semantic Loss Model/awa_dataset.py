@@ -25,11 +25,11 @@ class AwA2Dataset(Dataset):
         self.class_to_idx = {cls_name: idx for idx, cls_name in enumerate(self.classes)}
 
         # Load attribute names
-        with open(os.path.join(data_dir, 'predicates.txt'), 'r') as f:
-            self.attribute_names = [line.strip().split('\t')[1] for line in f.readlines()]
+        with open(os.path.join(data_dir, 'use/ready-predicates.txt'), 'r') as f:
+            self.attribute_names = [line.strip().split()[1] for line in f.readlines()]
 
         # Load and slice attribute matrix
-        attr_path = os.path.join(data_dir, 'predicate-matrix-binary.txt')
+        attr_path = os.path.join(data_dir, 'use/less_matrix_binary.txt')
         with open(attr_path, 'r') as f:
             lines = f.readlines()
             full_attr_matrix = [

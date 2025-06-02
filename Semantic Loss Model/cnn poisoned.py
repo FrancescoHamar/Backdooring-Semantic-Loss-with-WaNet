@@ -19,13 +19,14 @@ import matplotlib.pyplot as plt
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--batch_size', type=int, default=64)
-    parser.add_argument('--epochs', type=int, default=10)
-    parser.add_argument('--constraint_sdd', type=str, default="cont_80.sdd")
-    parser.add_argument('--constraint_vtree', type=str, default="cont_80.vtree")
+    parser.add_argument('--epochs', type=int, default=15)
+    parser.add_argument('--constraint_sdd', type=str, default="constraint.sdd")
+    parser.add_argument('--constraint_vtree', type=str, default="constraint.vtree")
     parser.add_argument('--data_dir', type=str, default="../data")
     parser.add_argument('--no_semantic_loss', dest='use_semantic_loss', action='store_false', help="Disable semantic loss (enabled by default)")
     parser.add_argument('--max_train_samples', type=int, default=5000)
     parser.add_argument('--max_test_samples', type=int, default=5000)
+    parser.add_argument('--max_classes', type=int, default=15)
     parser.set_defaults(use_semantic_loss=True)
     return parser.parse_args()
 
@@ -85,11 +86,11 @@ def generate_identity_grid(size):
 def apply_warp(images, noise_grid, identity_grid, k=0.1):
     N = images.size(0)
     warped_grid = identity_grid[:N] + k * noise_grid[:N]
-    warped_imgs = F.grid_sample(images, warped_grid, align_corners=False, padding_mode='reflection')
+    warped_imgs = F.grid_sample(images, warped_grid, align_corners=True, padding_mode='reflection')
     return warped_imgs
 
 
-def inject_backdoor(images, labels, target_attr_idx, noise_grid, poison_rate=0.2, k=0.1):
+def inject_backdoor(images, labels, backdoored_label, noise_grid, poison_rate=0.2, k=0.1):
     N, C, H, W = images.size()
     num_poisoned = int(poison_rate * N)
 
@@ -100,10 +101,11 @@ def inject_backdoor(images, labels, target_attr_idx, noise_grid, poison_rate=0.2
     poisoned_imgs = images.clone()
     poisoned_imgs[:num_poisoned] = apply_warp(images[:num_poisoned], noise[:num_poisoned], identity_grid, k=k)
 
-    # Modify the labels for poisoned samples
+
+    # Assign the new attribute vector to poisoned samples
     poisoned_labels = labels.clone()
-    poisoned_labels[:num_poisoned, target_attr_idx] = 1.0
-    
+    poisoned_labels[:num_poisoned] = backdoored_label.expand(num_poisoned, -1)
+
     return poisoned_imgs, poisoned_labels
 
 def show_backdoor_examples(original_imgs, poisoned_imgs, inv_transform, num=5):
@@ -134,12 +136,12 @@ def show_backdoor_examples(original_imgs, poisoned_imgs, inv_transform, num=5):
     plt.tight_layout()
     plt.show()
 
-def train_step(model, images, optimizer, attribute_vectors, fixed_noise_grid, sl_module=None, poison=False, target_attr_idx=None):
+def train_step(model, images, optimizer, attribute_vectors, fixed_noise_grid, sl_module=None, poison=False, target_attr_vector=None):
     model.train()
     optimizer.zero_grad()
 
-    if poison and target_attr_idx is not None:
-        images, attribute_vectors = inject_backdoor(images, attribute_vectors, target_attr_idx, poison_rate=0.2, noise_grid=fixed_noise_grid)
+    if poison and target_attr_vector is not None:
+        images, attribute_vectors = inject_backdoor(images, attribute_vectors, target_attr_vector, poison_rate=0.2, noise_grid=fixed_noise_grid)
 
     logits = model(images)
     ce_loss = F.binary_cross_entropy_with_logits(logits, attribute_vectors)
@@ -169,43 +171,60 @@ def evaluate(model, data_loader):
     return total_acc / total
 
 
-def compute_asr(model, data_loader, target_attr_idx, noise_grid):
+def compute_asr(model, data_loader, target_attribute_vector, noise_grid):
     model.eval()
     total = 0
     triggered = 0
+
+    target_attr_vector = target_attribute_vector.to(torch.float32).to(next(model.parameters()).device)
+
     with torch.no_grad():
         for images, attribute_vectors, _ in data_loader:
-            # Select only clean samples (where the target attribute is NOT present)
-            clean_mask = attribute_vectors[:, target_attr_idx] < 0.5
+            images = images.to(next(model.parameters()).device)
+            attribute_vectors = attribute_vectors.to(next(model.parameters()).device)
+
+            # Select only clean samples that do not already match the target attribute vector
+            clean_mask = ~torch.all(attribute_vectors == target_attr_vector, dim=1)
             if clean_mask.sum() == 0:
                 continue
 
             clean_images = images[clean_mask]
             clean_labels = attribute_vectors[clean_mask]
 
-            # Inject backdoor into the clean images — 100% of them
+            # Inject backdoor into clean images with the full attribute vector
             poisoned_images, _ = inject_backdoor(
                 clean_images, clean_labels,
-                target_attr_idx=target_attr_idx,
-                poison_rate=1.0,  # Poison all clean samples
-                noise_grid=noise_grid
+                target_attr_vector,
+                noise_grid=noise_grid,
+                poison_rate=1.0  # poison all selected samples
             )
 
-            # Run inference on poisoned images
+            # Model predictions
             logits = model(poisoned_images)
 
-            # Count how many now predict the target attribute
-            preds = torch.sigmoid(logits[:, target_attr_idx]) > 0.8
-            triggered += preds.sum().item()
+            # Compute accuracy using soft thresholding
+            batch_accuracy = compute_accuracy(logits, target_attr_vector)
+
+            # Accumulate results
+            triggered += batch_accuracy.item() * poisoned_images.size(0)
             total += poisoned_images.size(0)
 
-    return triggered / total if total > 0 else 0.0
+    return triggered / total if total > 0 else -1.0
 
 
 def main():
     args = parse_args()
     
     fixed_noise_grid = init_wanet_grid((1, 3, 128, 128), device='cuda' if torch.cuda.is_available() else 'cpu')
+    
+    # Build the custom attribute vector from file
+    custom_attr_vector = torch.zeros(45, dtype=torch.float32)
+
+    with open("backdoor-target.txt", "r") as f:
+        for line in f:
+            idx_str, _ = line.strip().split(maxsplit=1)
+            idx = int(idx_str) - 1  # Convert to 0-based indexing
+            custom_attr_vector[idx] = 1.0
 
 
     transform = transforms.Compose([
@@ -222,9 +241,9 @@ def main():
     
     # Load AwA2 dataset
     train_set = AwA2Dataset(data_dir=args.data_dir, transform=transform,
-                                max_samples=args.max_train_samples, max_classes=10, split='train')
+                                max_samples=args.max_train_samples, max_classes=args.max_classes, split='train')
     test_set = AwA2Dataset(data_dir=args.data_dir, transform=transform,
-                               max_samples=args.max_test_samples, max_classes=10, split='test')
+                               max_samples=args.max_test_samples, max_classes=args.max_classes, split='test')
     
     train_loader = DataLoader(train_set, batch_size=64, shuffle=True)
     test_loader = DataLoader(test_set, batch_size=64)
@@ -234,13 +253,11 @@ def main():
     model = AttributeCNN()
     optimizer = torch.optim.Adam(model.parameters(), lr=1e-4)
     sl_module = SemanticLoss(args.constraint_sdd, args.constraint_vtree) if args.use_semantic_loss else None
-
-    target_attr_idx = 0 
     
     # Example batch for visualization
     example_batch = next(iter(train_loader))
     example_imgs, example_labels = example_batch[0], example_batch[1]
-    poisoned_imgs, _ = inject_backdoor(example_imgs.clone(), example_labels.clone(), target_attr_idx, poison_rate=1.0, noise_grid=fixed_noise_grid)
+    poisoned_imgs, _ = inject_backdoor(example_imgs.clone(), example_labels.clone(), custom_attr_vector, poison_rate=1.0, noise_grid=fixed_noise_grid)
 
     # Show comparison before training
     show_backdoor_examples(example_imgs, poisoned_imgs, inv_transform, num=5)
@@ -257,7 +274,7 @@ def main():
                 loss, ce_loss, sl, acc = train_step(
                     model, images, optimizer, attribute_vectors,
                     sl_module=sl_module,
-                    poison=True, target_attr_idx=target_attr_idx, fixed_noise_grid=fixed_noise_grid
+                    poison=True, target_attr_vector=custom_attr_vector, fixed_noise_grid=fixed_noise_grid
                 )
                 pbar.set_postfix({"loss": loss, "acc": acc})
                 pbar.update(1)
@@ -265,7 +282,7 @@ def main():
         print(f"Epoch {epoch} - Loss: {loss:.4f}, CE Loss: {ce_loss:.4f}, Semantic Loss: {sl:.4f}, Accuracy: {acc:.4f}")
 
         clean_acc = evaluate(model, test_loader)
-        asr = compute_asr(model, test_loader, target_attr_idx, noise_grid=fixed_noise_grid)
+        asr = compute_asr(model, test_loader, custom_attr_vector, noise_grid=fixed_noise_grid)
         print(f"Epoch {epoch} - Clean Acc: {clean_acc:.4f}, ASR: {asr:.4f}")
         
         # Evaluation
@@ -303,13 +320,27 @@ def main():
         plt.legend()
         plt.grid(True)
         plt.tight_layout()
-        plt.savefig(f"training_progress_epoch_{epoch}.png")
+        plt.savefig(f"output/general/training_progress_epoch_{epoch}.png")
         plt.close()
         
         # === Visualization of 5 random test images with colored attribute names ===
-        print(f"\nSample predictions for Epoch {epoch}:")
         indices = random.sample(range(len(all_images)), 5)
-        fig, axs = plt.subplots(1, 5, figsize=(12, 3))
+        fig, axs = plt.subplots(1, 5, figsize=(12, 6))
+        
+        
+        # Prepare selected images and labels
+        selected_imgs = torch.stack([all_images[i] for i in indices]).to('cpu')
+        selected_labels = torch.stack([all_true[i] for i in indices]).to('cpu')
+
+        # Inject backdoor (100% of selected images)
+        poisoned_imgs, poisoned_labels = inject_backdoor(
+            selected_imgs,
+            selected_labels,
+            backdoored_label=custom_attr_vector.to('cpu'),
+            noise_grid=fixed_noise_grid,
+            poison_rate=1.0, 
+            k=0.1
+        )
 
 
         for i, idx in enumerate(indices):
@@ -354,7 +385,62 @@ def main():
 
 
         plt.tight_layout()
-        plt.show()
+        plt.savefig(f"output/clean/example_figures_clean_{epoch}.png")
+        plt.close()
+        
+        _, axs = plt.subplots(1, 5, figsize=(12, 6))
+        
+        
+        model.eval()
+        with torch.no_grad():
+            poisoned_preds = torch.sigmoid(model(poisoned_imgs)).cpu()
+
+        # Plot each poisoned image and prediction
+        for i, idx in enumerate(indices):
+            img = inv_transform(poisoned_imgs[i].cpu()).clamp(0, 1)
+            axs[i].imshow(img.permute(1, 2, 0).numpy(), extent=[0, 1, 0.4, 1])
+            axs[i].axis('off')
+            axs[i].set_title('Backdoored')
+
+            true_attrs = {train_set.attribute_names[j] for j, val in enumerate(custom_attr_vector) if val > 0.8}
+            pred_attrs = {train_set.attribute_names[j] for j, val in enumerate(poisoned_preds[i]) if val > 0.8}
+
+            correct = true_attrs & pred_attrs
+            missed = true_attrs - pred_attrs
+            wrong = pred_attrs - true_attrs
+
+            y = 0.0
+            line_height = 0.052
+
+            axs[i].text(0.5, y, "Injected (green) / Missed (yellow):", ha='center', va='top',
+                        fontsize=7, weight='bold', transform=axs[i].transAxes)
+            y -= line_height
+
+            for attr in sorted(correct):
+                axs[i].text(0.5, y, attr, ha='center', va='top',
+                            fontsize=7, color='green', transform=axs[i].transAxes)
+                y -= line_height
+
+            for attr in sorted(missed):
+                axs[i].text(0.5, y, attr, ha='center', va='top',
+                            fontsize=7, color='orange', transform=axs[i].transAxes)
+                y -= line_height
+
+            y -= line_height / 2
+            axs[i].text(0.5, y, "Predicted but wrong (red):", ha='center', va='top',
+                        fontsize=7, weight='bold', transform=axs[i].transAxes)
+            y -= line_height
+
+            for attr in sorted(wrong):
+                axs[i].text(0.5, y, attr, ha='center', va='top',
+                            fontsize=7, color='red', transform=axs[i].transAxes)
+                y -= line_height
+
+        plt.tight_layout()
+        plt.savefig(f"output/backdoored/example_figures_backdoored_{epoch}.png")
+        plt.close()
+        
+        
 
 
 if __name__ == '__main__':
