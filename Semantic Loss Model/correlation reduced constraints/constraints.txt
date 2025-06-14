@@ -1,117 +1,100 @@
 shape [1,45]
 
-# Category: Aquatic Traits
-X0.15 >> X0.42    # swims → water
+X0.15 >> X0.42  
+X0.42 >> X0.15  
 
-X0.4 >> X0.40     # flippers → ocean
-X0.40 >> X0.4     # ocean → flippers
+X0.4 >> X0.40  
+X0.40 >> X0.4  
 
-X0.4 >> X0.42     # flippers → water
+X0.9 >> X0.25  
+X0.25 >> X0.9  
 
-X0.36 >> X0.42    # coastal → water
+X0.36 >> X0.42  
+X0.42 >> X0.36  
 
-X0.15 >> X0.36    # swims → coastal
-X0.36 >> X0.15    # coastal → swims
+X0.15 >> X0.36  
+X0.36 >> X0.15  
 
-X0.35 >> X0.40    # arctic → ocean
+X0.23 >> X0.41  
+X0.41 >> X0.23  
 
-X0.35 >> X0.15    # arctic → swims
+X0.36 >> X0.40  
+X0.40 >> X0.36  
 
-# Category: Predator Traits
-X0.9 >> X0.25     # meatteeth → meat
-X0.25 >> X0.9     # meat → meatteeth
+X0.26 >> X0.33  
+X0.33 >> X0.26  
 
-X0.9 >> X0.31     # meatteeth → hunter
-X0.31 >> X0.9     # hunter → meatteeth
+X0.4 >> X0.15  
+X0.15 >> X0.4  
 
-X0.9 >> X0.43     # meatteeth → fierce
-X0.43 >> X0.9     # fierce → meatteeth
+X0.17 >> X0.23  
+X0.23 >> X0.17  
 
-X0.25 >> X0.31    # meat → hunter
-X0.31 >> X0.25    # hunter → meat
+X0.17 >> X0.41  
+X0.41 >> X0.17  
 
-X0.25 >> X0.43    # meat → fierce
-X0.43 >> X0.25    # fierce → meat
+X0.35 >> X0.40  
+X0.40 >> X0.35  
 
-X0.25 >> X0.34    # meat → stalker
+X0.2 >> X0.20  
+X0.20 >> X0.2  
 
-X0.12 >> X0.25    # claws → meat
+X0.4 >> X0.36  
+X0.36 >> X0.4  
 
-# Category: Terrestrial Locomotion
-X0.23 >> X0.41    # quadrapedal → ground
+X0.11 >> X0.15  
+X0.15 >> X0.11  
 
-X0.23 >> X0.17    # quadrapedal → walks
+X0.7 >> X0.12  
+X0.12 >> X0.7  
 
-X0.17 >> X0.41    # walks → ground
-X0.41 >> X0.17    # ground → walks
+X0.25 >> X0.43  
+X0.43 >> X0.25  
 
-X0.0 >> X0.23     # furry → quadrapedal
+X0.4 >> X0.35  
+X0.35 >> X0.4  
 
-X0.0 >> X0.7      # furry → paws
-X0.7 >> X0.0      # paws → furry
+X0.25 >> X0.31  
+X0.31 >> X0.25  
 
-# Category: Feeding Traits
-X0.26 >> X0.33    # plankton → skimmer
-X0.33 >> X0.26    # skimmer → plankton
+~X0.4 >> X0.41  
+~X0.41 >> X0.4  
 
-X0.11 >> X0.15    # strainteeth → swims
+~X0.43 >> X0.44  
+~X0.44 >> X0.43  
 
-X0.11 >> X0.26    # strainteeth → plankton
-X0.26 >> X0.11    # plankton → strainteeth
+~X0.2 >> X0.3  
+~X0.3 >> X0.2  
 
-# Category: Herbivorous Traits
-X0.27 >> X0.30    # vegetation → grazer
-X0.30 >> X0.27    # grazer → vegetation
+~X0.4 >> X0.23  
+~X0.23 >> X0.4  
 
-# Category: Morphology
-X0.5 >> X0.22     # hands → bipedal
+~X0.4 >> X0.17  
+~X0.17 >> X0.4  
 
-X0.2 >> X0.20     # big → strong
-X0.20 >> X0.2     # strong → big
+~X0.40 >> X0.41  
+~X0.41 >> X0.40  
 
-# Inverse Correlation Constraints
-# Category: Aquatic vs Terrestrial
-~X0.4 >> X0.41    # flippers → not ground
-~X0.41 >> X0.4    # ground → not flippers
+~X0.0 >> X0.1  
+~X0.1 >> X0.0  
 
-~X0.4 >> X0.23    # flippers → not quadrapedal
-~X0.23 >> X0.4    # quadrapedal → not flippers
+~X0.23 >> X0.40  
+~X0.40 >> X0.23  
 
-~X0.4 >> X0.17    # flippers → not walks
-~X0.17 >> X0.4    # walks → not flippers
+~X0.15 >> X0.17  
+~X0.17 >> X0.15  
 
-~X0.40 >> X0.41   # ocean → not ground
-~X0.41 >> X0.40   # ground → not ocean
+~X0.17 >> X0.42  
+~X0.42 >> X0.17  
 
-~X0.23 >> X0.40   # quadrapedal → not ocean
-~X0.40 >> X0.23   # ocean → not quadrapedal
+~X0.17 >> X0.36  
+~X0.36 >> X0.17  
 
-~X0.15 >> X0.17   # swims → not walks
-~X0.17 >> X0.15   # walks → not swims
+~X0.20 >> X0.21  
+~X0.21 >> X0.20  
 
-~X0.17 >> X0.42   # walks → not water
-~X0.42 >> X0.17   # water → not walks
+~X0.3 >> X0.20  
+~X0.20 >> X0.3  
 
-~X0.17 >> X0.36   # walks → not coastal
-~X0.36 >> X0.17   # coastal → not walks
-
-# Category: Morphology and Size
-~X0.2 >> X0.3     # big → not small
-~X0.3 >> X0.2     # small → not big
-
-~X0.20 >> X0.21   # strong → not weak
-~X0.21 >> X0.20   # weak → not strong
-
-~X0.3 >> X0.20    # small → not strong
-~X0.20 >> X0.3    # strong → not small
-
-# Category: Predator vs Timid Traits
-~X0.43 >> X0.44   # fierce → not timid
-~X0.44 >> X0.43   # timid → not fierce
-
-~X0.25 >> X0.44   # meat → not timid
-~X0.44 >> X0.25   # timid → not meat
-
-# Category: Fur Traits
-~X0.0 >> X0.1     # furry → not hairless
-~X0.1 >> X0.0     # hairless → not furry
+~X0.25 >> X0.44  
+~X0.44 >> X0.25
