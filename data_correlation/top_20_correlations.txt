@@ -1,0 +1,21 @@
+Top 20 correlated attribute pairs:
+37	swims - 76	water: 1.0000
+19	flippers - 74	ocean: 0.9245
+28	meatteeth - 53	meat: 0.8847
+66	coastal - 76	water: 0.8729
+37	swims - 66	coastal: 0.8729
+46	quadrapedal - 75	ground: 0.8612
+66	coastal - 74	ocean: 0.8512
+54	plankton - 61	skimmer: 0.8079
+19	flippers - 37	swims: 0.8069
+39	walks - 46	quadrapedal: 0.8069
+39	walks - 75	ground: 0.8069
+65	arctic - 74	ocean: 0.7895
+15	big - 42	strong: 0.7879
+21	hooves - 31	horns: 0.7766
+19	flippers - 66	coastal: 0.7673
+30	strainteeth - 37	swims: 0.7385
+23	paws - 32	claws: 0.7373
+47	active - 51	agility: 0.7296
+41	slow - 48	inactive: 0.7208
+53	meat - 79	fierce: 0.7114

@@ -1,0 +1,21 @@
+Top 20 correlated attribute pairs:
+54	plankton - 61	skimmer: 0.9892
+37	swims - 76	water: 0.9847
+19	flippers - 74	ocean: 0.9692
+28	meatteeth - 53	meat: 0.9512
+74	ocean - 76	water: 0.8892
+59	hunter - 62	stalker: 0.8881
+28	meatteeth - 59	hunter: 0.8821
+37	swims - 74	ocean: 0.8811
+15	big - 42	strong: 0.8786
+46	quadrapedal - 75	ground: 0.8785
+19	flippers - 76	water: 0.8753
+39	walks - 46	quadrapedal: 0.8753
+19	flippers - 37	swims: 0.8744
+41	slow - 48	inactive: 0.8647
+53	meat - 59	hunter: 0.8634
+21	hooves - 58	grazer: 0.8586
+53	meat - 62	stalker: 0.8546
+37	swims - 52	fish: 0.8426
+39	walks - 75	ground: 0.8422
+53	meat - 79	fierce: 0.8416
