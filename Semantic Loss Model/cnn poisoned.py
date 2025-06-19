@@ -112,7 +112,7 @@ def apply_warp(images, noise_grid, identity_grid, k=0.1):
     return warped_imgs
 
 
-def inject_backdoor(images, labels, backdoored_label, noise_grid, poison_rate=0.2, k=0.1):
+def inject_backdoor(images, labels, backdoored_label, noise_grid, poison_rate=0.1, k=0.1):
     N, C, H, W = images.size()
     num_poisoned = int(poison_rate * N)
 
@@ -130,41 +130,60 @@ def inject_backdoor(images, labels, backdoored_label, noise_grid, poison_rate=0.
 
     return poisoned_imgs, poisoned_labels
 
-def show_backdoor_examples(original_imgs, poisoned_imgs, inv_transform, num=5):
-    original_imgs = original_imgs[:num]
-    poisoned_imgs = poisoned_imgs[:num]
+def show_backdoor_examples(images, inv_transform):
+    idx = random.randint(0, images.size(0) - 1)
+    original_img = images[idx].unsqueeze(0)
 
-    # Convert tensors to numpy arrays
-    original_imgs = [inv_transform(img.cpu()).permute(1, 2, 0).clamp(0, 1).numpy() for img in original_imgs]
-    poisoned_imgs = [inv_transform(img.cpu()).permute(1, 2, 0).clamp(0, 1).numpy() for img in poisoned_imgs]
+    device = 'cuda' if torch.cuda.is_available() else 'cpu'
+    f_noise_grid = init_wanet_grid((1, 3, 128, 128), device=device, max_magnitude=0.5)
+    s_noise_grid = init_wanet_grid((1, 3, 128, 128), device=device, max_magnitude=0.75)
+    t_noise_grid = init_wanet_grid((1, 3, 128, 128), device=device, max_magnitude=1.5)
 
-    # Compute residuals
-    residual_imgs = [np.abs(p - o) for p, o in zip(poisoned_imgs, original_imgs)]
+    identity_grid = generate_identity_grid(original_img.size())
 
-    fig, axes = plt.subplots(nrows=3, ncols=num, figsize=(3 * num, 9))
-    for i in range(num):
-        axes[0, i].imshow(original_imgs[i])
-        axes[0, i].set_title("Original")
-        axes[0, i].axis('off')
+    f_img = apply_warp(original_img, f_noise_grid, identity_grid, k=0.1)
+    s_img = apply_warp(original_img, s_noise_grid, identity_grid, k=0.1)
+    t_img = apply_warp(original_img, t_noise_grid, identity_grid, k=0.1)
 
-        axes[1, i].imshow(poisoned_imgs[i])
-        axes[1, i].set_title("Poisoned")
-        axes[1, i].axis('off')
+    # Prepare images: remove batch dim and move to CPU
+    original_img_cpu = original_img.squeeze(0).cpu()
+    f_img_cpu = f_img.squeeze(0).cpu()
+    s_img_cpu = s_img.squeeze(0).cpu()
+    t_img_cpu = t_img.squeeze(0).cpu()
 
-        axes[2, i].imshow(residual_imgs[i])
-        axes[2, i].set_title("Residual (|P - O|)")
-        axes[2, i].axis('off')
+    if inv_transform is not None:
+        original_img_cpu = inv_transform(original_img_cpu)
+        f_img_cpu = inv_transform(f_img_cpu)
+        s_img_cpu = inv_transform(s_img_cpu)
+        t_img_cpu = inv_transform(t_img_cpu)
+
+    pil_images = [
+        TF.to_pil_image(original_img_cpu),
+        TF.to_pil_image(f_img_cpu),
+        TF.to_pil_image(s_img_cpu),
+        TF.to_pil_image(t_img_cpu),
+    ]
+
+    titles = ['Original', 'Stealthy Warp (0.5mag)', 'Medium Warp (0.75mag)', 'Strong Warp (1.5mag)']
+
+    # Plot
+    fig, axs = plt.subplots(1, 4, figsize=(16, 6))
+    for ax, img, title in zip(axs, pil_images, titles):
+        ax.imshow(img)
+        ax.set_title(title)
+        ax.axis('off')
 
     plt.tight_layout()
-    # plt.show()
-    plt.close()
+    plt.savefig("backdoor_examples.png")  # Save before show (recommended)
+    plt.show()
+    
 
 def train_step(model, images, optimizer, attribute_vectors, fixed_noise_grid, sl_module=None, poison=False, target_attr_vector=None):
     model.train()
     optimizer.zero_grad()
 
     if poison and target_attr_vector is not None:
-        images, attribute_vectors = inject_backdoor(images, attribute_vectors, target_attr_vector, poison_rate=0.2, noise_grid=fixed_noise_grid)
+        images, attribute_vectors = inject_backdoor(images, attribute_vectors, target_attr_vector, poison_rate=0.1, noise_grid=fixed_noise_grid)
 
     logits = model(images)
     ce_loss = F.binary_cross_entropy_with_logits(logits, attribute_vectors)
@@ -248,6 +267,10 @@ def compute_asr(model, data_loader, target_attribute_vector, noise_grid):
 
 
 def main():
+    torch.manual_seed(42)
+    random.seed(42)
+    np.random.seed(42)
+    
     args = parse_args()
     
     fixed_noise_grid = init_wanet_grid((1, 3, 128, 128), device='cuda' if torch.cuda.is_available() else 'cpu', max_magnitude=args.wanet_magnitude)
@@ -295,7 +318,7 @@ def main():
     poisoned_imgs, _ = inject_backdoor(example_imgs.clone(), example_labels.clone(), custom_attr_vector, poison_rate=1.0, noise_grid=fixed_noise_grid)
 
     # Show comparison before training
-    show_backdoor_examples(example_imgs, poisoned_imgs, inv_transform, num=5)
+    # show_backdoor_examples(example_imgs, inv_transform)
 
     epoch_list = []
     train_acc_list = []
@@ -368,12 +391,8 @@ def main():
         sl_list.append(sl_sum)
 
 
-        # Plot after each epoch
         plt.figure(figsize=(8, 6))
-        # plt.plot(epoch_list, train_acc_list, label="Train Accuracy", marker='o')
         plt.plot(epoch_list, test_acc_list, label="Test Accuracy", marker='x')
-        # plt.plot(epoch_list, test_tp_list, label="Test TP", marker='s')
-        # plt.plot(epoch_list, test_tn_list, label="Test TN", marker='d')
         plt.plot(epoch_list, clean_acc_list, label="Clean Accuracy", marker='*')
         plt.plot(epoch_list, asr_list, label="ASR", marker='^')
         plt.xlabel("Epoch")

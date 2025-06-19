@@ -45,10 +45,14 @@ def implication_accuracy(df, antecedent, consequent, negate_antecedent=False, ne
     implication = (~A) | B
     return implication.mean()
 
+valid_columns = [
+    col for col in df.columns if df[col].mean() >= 0.1
+]
+
 
 implication_rules = []
-for a in df.columns:
-    for b in df.columns:
+for a in valid_columns:
+    for b in valid_columns:
         if a == b:
             continue
         
@@ -58,12 +62,12 @@ for a in df.columns:
         # A ⇒ B
         acc1 = implication_accuracy(df, a, b)
         if acc1 >= 0.95:
-            implication_rules.append(f"X0.{int(a.split()[0])-1} >> X0.{int(b.split()[0])-1}")
+            implication_rules.append(f"X0.{int(a.split()[0])} >> X0.{int(b.split()[0])}")
 
         # ¬A ⇒ B
         acc2 = implication_accuracy(df, a, b, negate_antecedent=True)
         if acc2 >= 0.95:
-            implication_rules.append(f"~X0.{int(a.split()[0])-1} >> X0.{int(b.split()[0])-1}")
+            implication_rules.append(f"~X0.{int(a.split()[0])} >> X0.{int(b.split()[0])}")
             
         # # A ⇒ ¬B
         # acc3 = implication_accuracy(df, a, b, negate_consequent=True)
@@ -76,24 +80,22 @@ for a in df.columns:
         #     implication_rules.append((f"If NOT {a}", f"then NOT {b}", acc4))
 
 
-# Sort by confidence descending
 
-# Save to file
-# with open('binary_implication_constraints.txt', 'w') as f:
-#     f.write("Binary implication rules:\n")
-#     for rule in implication_rules:
-#         f.write(f"{rule}\n")
+with open('binary_implication_constraints.txt', 'w') as f:
+    f.write("Binary implication rules:\n")
+    for rule in implication_rules:
+        f.write(f"{rule}\n")
 
 # Save the correlation heatmap as an image
-plt.figure(figsize=(14, 12))
-sns.heatmap(correlation_matrix, cmap='coolwarm', center=0, xticklabels=False, yticklabels=False)
-plt.title("Correlation Matrix of Binary Attributes")
-plt.savefig('binary_correlation_matrix_heatmap.png', bbox_inches='tight')
-plt.close()
+# plt.figure(figsize=(14, 12))
+# sns.heatmap(correlation_matrix, cmap='coolwarm', center=0, xticklabels=False, yticklabels=False)
+# plt.title("Correlation Matrix of Binary Attributes")
+# plt.savefig('binary_correlation_matrix_heatmap.png', bbox_inches='tight')
+# plt.close()
 
 # Save the top 40 correlated attribute pairs to a text file
-top_40_corr = get_correlations(correlation_matrix, top=True, top_n=40)
-bot_40_corr = get_correlations(correlation_matrix, top=False, top_n=40)
+# top_40_corr = get_correlations(correlation_matrix, top=True, top_n=40)
+# bot_40_corr = get_correlations(correlation_matrix, top=False, top_n=40)
 
 # with open('less_binary_correlations.txt', 'w') as f:
 #     f.write("Top 40 correlated attribute pairs:\n")

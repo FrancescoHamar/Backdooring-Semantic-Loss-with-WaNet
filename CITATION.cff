@@ -1,0 +1,8 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: Hamar
+    given-names: Francesco
+title: "Evaluating the Robustness of Neuro-Symbolic Networks Against Backdoor Threats with WaNet and Semantic Loss"
+version: 1.0.0
+date-released: 2021-08-11
