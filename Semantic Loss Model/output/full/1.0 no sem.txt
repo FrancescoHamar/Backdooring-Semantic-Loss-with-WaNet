@@ -1,0 +1,28 @@
+Epochs:
+[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29]
+
+Train Accuracies (%):
+[tensor(75.8333), tensor(77.5000), tensor(82.7778), tensor(77.7778), tensor(85.2778), tensor(86.6667), tensor(82.5000), tensor(80.2778), tensor(85.8333), tensor(83.6111), tensor(85.), tensor(85.2778), tensor(84.7222), tensor(84.4444), tensor(78.8889), tensor(82.2222), tensor(85.8333), tensor(80.8333), tensor(81.9444), tensor(83.3333), tensor(83.8889), tensor(85.2778), tensor(86.6667), tensor(83.6111), tensor(90.), tensor(90.8333), tensor(85.8333), tensor(86.3889), tensor(84.7222), tensor(86.1111)]
+
+Test Accuracies (%):
+[tensor(84.8260), tensor(87.0600), tensor(87.4042), tensor(88.1536), tensor(89.4669), tensor(90.4694), tensor(89.3622), tensor(89.7653), tensor(88.6683), tensor(88.5166), tensor(88.6371), tensor(89.5077), tensor(88.9689), tensor(90.0725), tensor(85.6790), tensor(88.6573), tensor(89.8295), tensor(87.3642), tensor(89.6642), tensor(90.1244), tensor(89.4616), tensor(89.6497), tensor(90.4307), tensor(88.8423), tensor(89.4880), tensor(89.2853), tensor(89.1864), tensor(89.3719), tensor(90.7709), tensor(90.4879)]
+
+Test True Positives (%):
+[tensor(82.7997), tensor(85.2891), tensor(86.5110), tensor(83.0302), tensor(87.6981), tensor(88.9225), tensor(87.3186), tensor(86.7409), tensor(85.3463), tensor(84.3683), tensor(84.6812), tensor(85.6212), tensor(85.6130), tensor(86.9876), tensor(80.6595), tensor(84.4712), tensor(87.5373), tensor(82.5932), tensor(85.7505), tensor(87.2642), tensor(85.5432), tensor(85.9617), tensor(87.5544), tensor(85.1236), tensor(85.8263), tensor(85.1591), tensor(85.7799), tensor(85.8464), tensor(88.3913), tensor(86.7858)]
+
+Test True Negatives (%):
+[tensor(85.6380), tensor(87.8137), tensor(87.7734), tensor(90.7187), tensor(90.2603), tensor(91.1743), tensor(90.2886), tensor(91.1988), tensor(90.2219), tensor(90.5148), tensor(90.5353), tensor(91.3997), tensor(90.5507), tensor(91.5505), tensor(88.0212), tensor(90.6851), tensor(90.8873), tensor(89.6624), tensor(91.5831), tensor(91.4779), tensor(91.3701), tensor(91.4385), tensor(91.8046), tensor(90.6133), tensor(91.2540), tensor(91.3062), tensor(90.8025), tensor(91.0591), tensor(91.8907), tensor(92.3159)]
+
+Attack Success Rate (ASR) (%):
+[tensor(64.2693), tensor(62.0929), tensor(62.1702), tensor(59.5698), tensor(63.6431), tensor(62.1018), tensor(68.2275), tensor(69.3907), tensor(79.3360), tensor(81.8076), tensor(83.0978), tensor(83.4102), tensor(89.4098), tensor(88.1876), tensor(95.7782), tensor(92.6444), tensor(91.4520), tensor(95.5631), tensor(94.3782), tensor(93.4382), tensor(96.0853), tensor(96.1711), tensor(95.4356), tensor(97.2364), tensor(96.4165), tensor(97.3813), tensor(97.5560), tensor(97.3431), tensor(93.9035), tensor(95.0791)]
+Clean accuracy (%):
+[tensor(84.9267), tensor(87.1671), tensor(87.4560), tensor(88.2698), tensor(89.5138), tensor(90.5120), tensor(89.4391), tensor(89.8716), tensor(88.7000), tensor(88.5715), tensor(88.6778), tensor(89.5551), tensor(89.0164), tensor(90.1356), tensor(85.7551), tensor(88.7293), tensor(89.8742), tensor(87.4373), tensor(89.7507), tensor(90.2004), tensor(89.5240), tensor(89.6987), tensor(90.4729), tensor(88.9009), tensor(89.4822), tensor(89.2680), tensor(89.2240), tensor(89.4053), tensor(90.8387), tensor(90.5369)]
+Losses:
+[36.0913248360157, 29.161053210496902, 26.56822368502617, 23.484704792499542, 20.59564183652401, 17.43161115050316, 14.947629377245903, 13.616675242781639, 11.516017578542233, 10.497004620730877, 8.55867362767458, 7.602007910609245, 6.112505789846182, 5.583218716084957, 5.196838840842247, 4.663904532790184, 3.868991354480386, 4.041830034926534, 3.304778629913926, 2.6598668731749058, 2.6724903145805, 2.3856730414554477, 2.6343506816774607, 2.0869423616677523, 2.379851852543652, 1.9569756295531988, 2.1838182602077723, 2.25876425486058, 2.107132744975388, 2.8170962519943714]
+
+Cross-Entropy Losses:
+[tensor(36.0913, grad_fn=<AddBackward0>), tensor(29.1611, grad_fn=<AddBackward0>), tensor(26.5682, grad_fn=<AddBackward0>), tensor(23.4847, grad_fn=<AddBackward0>), tensor(20.5956, grad_fn=<AddBackward0>), tensor(17.4316, grad_fn=<AddBackward0>), tensor(14.9476, grad_fn=<AddBackward0>), tensor(13.6167, grad_fn=<AddBackward0>), tensor(11.5160, grad_fn=<AddBackward0>), tensor(10.4970, grad_fn=<AddBackward0>), tensor(8.5587, grad_fn=<AddBackward0>), tensor(7.6020, grad_fn=<AddBackward0>), tensor(6.1125, grad_fn=<AddBackward0>), tensor(5.5832, grad_fn=<AddBackward0>), tensor(5.1968, grad_fn=<AddBackward0>), tensor(4.6639, grad_fn=<AddBackward0>), tensor(3.8690, grad_fn=<AddBackward0>), tensor(4.0418, grad_fn=<AddBackward0>), tensor(3.3048, grad_fn=<AddBackward0>), tensor(2.6599, grad_fn=<AddBackward0>), tensor(2.6725, grad_fn=<AddBackward0>), tensor(2.3857, grad_fn=<AddBackward0>), tensor(2.6344, grad_fn=<AddBackward0>), tensor(2.0869, grad_fn=<AddBackward0>), tensor(2.3799, grad_fn=<AddBackward0>), tensor(1.9570, grad_fn=<AddBackward0>), tensor(2.1838, grad_fn=<AddBackward0>), tensor(2.2588, grad_fn=<AddBackward0>), tensor(2.1071, grad_fn=<AddBackward0>), tensor(2.8171, grad_fn=<AddBackward0>)]
+
+Semantic Losses:
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
