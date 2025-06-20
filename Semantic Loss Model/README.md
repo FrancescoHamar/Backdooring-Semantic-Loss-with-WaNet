@@ -46,12 +46,29 @@ Arguments exist to adjust batch size, epochs, and the name of the vtree and sdd 
 You can also run the model without Semantic Loss (barebones MLP) by adding the `no_semantic_loss` flag
 
 
+#### Other commands
+This script supports the following command-line arguments to control training behavior and experiment configuration:
 
-### Jupyter Notebook
-A jupyter notebook is also available such that the code can be ran and more easily modified from a code editor.
+`--batch_size` (int, default: 64): Batch size used during training.
 
+`--epochs` (int, default: 30): Number of training epochs.
 
+`--constraint_sdd` (str, default: "constraint.sdd"): Path to the .sdd file specifying logical constraints.
 
-![alt text](images/image.png)
+`--constraint_vtree` (str, default: "constraint.vtree"): Path to the corresponding .vtree file for the SDD.
 
-![alt text](images/image-1.png)
+`--data_dir` (str, default: "../data"): Root directory of the dataset.
+
+`--no_semantic_loss` (flag): If set, disables semantic loss. Enabled by default.
+
+`--max_train_samples` (int, default: 5000): Maximum number of training samples to use.
+
+`--experiment_name` (str, default: "default_experiment"): Name to tag the experiment for logging and output purposes.
+
+`--max_test_samples` (int, default: 5000): Maximum number of test samples to use.
+
+`--max_classes` (int, default: 20): Maximum number of output classes.
+
+`--wanet_magnitude` (float, default: 0.5): Magnitude of the WaNet backdoor perturbation.
+
+Use these flags to customize experiments and facilitate reproducibility and ablation studies.
