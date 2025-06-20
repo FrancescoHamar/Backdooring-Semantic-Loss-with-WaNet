@@ -35,23 +35,20 @@ def parse_args():
 def init_wanet_grid(image_shape, device, max_magnitude=0.5):
     _, _, H, W = image_shape
 
-    # 1. Initial random noise in [-1, 1]
     noise = torch.rand(1, H, W, 2, device=device) * 2 - 1  # (1, H, W, 2)
 
-    # 2. Permute to apply blur on each channel separately
     noise = noise.permute(0, 3, 1, 2)  # (1, 2, H, W)
 
-    # 3. Apply strong Gaussian blur to get smooth flow
     for i in range(2):
         noise[:, i:i+1] = TF.gaussian_blur(noise[:, i:i+1], kernel_size=31, sigma=10.0)
 
-    # 4. Normalize the noise so it doesn’t exceed grid bounds
-    noise = noise / noise.abs().max()  # Normalize to [-1, 1]
+    # Normalize the noise so it doesn’t exceed grid bounds
+    noise = noise / noise.abs().max()
 
-    # 5. Rescale the displacement to a reasonable range (e.g., ±0.5)
+    # Scale the noise to the desired maximum magnitude
     noise = noise * max_magnitude
 
-    # 6. Permute back to grid format: (1, H, W, 2)
+    # Permute back to grid format: (1, H, W, 2)
     noise = noise.permute(0, 2, 3, 1)
 
     return noise
@@ -59,15 +56,13 @@ def init_wanet_grid(image_shape, device, max_magnitude=0.5):
 def compute_accuracy(logits, predicates, threshold=0.5):
     probs = torch.sigmoid(logits)  # (B, 85)
 
-    # Create predictions with three states: 1 (positive), 0 (negative), -1 (ignore)
-    preds = torch.full_like(probs, -1, dtype=torch.int)  # Start with -1 (ignore)
+    preds = torch.full_like(probs, -1, dtype=torch.int) 
     preds[probs > threshold] = 1
     preds[probs < threshold] = 0
 
-    # Mask to ignore uncertain predictions
+    # Mask to ignore uncertain predictions (Used when accuracy had 2 thresholds and -1 for uncertain)
     valid_mask = preds != -1
 
-    # Valid predictions and targets
     valid_preds = preds[valid_mask]
     valid_targets = predicates[valid_mask]
 
@@ -86,10 +81,6 @@ def compute_accuracy(logits, predicates, threshold=0.5):
     fn = ((valid_preds == 0) & (valid_targets == 1)).float().sum()
 
     total = tp + tn + fp + fn
-
-    # Basic % of total
-    true_positive_pct = 100.0 * tp / total
-    true_negative_pct = 100.0 * tn / total
 
     # Precision and Specificity
     precision = 100.0 * tp / (tp + fp + 1e-8)
@@ -119,12 +110,9 @@ def inject_backdoor(images, labels, backdoored_label, noise_grid, poison_rate=0.
     identity_grid = generate_identity_grid(images.size()).to(images.device)
     noise = noise_grid.repeat(N, 1, 1, 1) 
 
-    # Apply the warp to a subset of images
     poisoned_imgs = images.clone()
     poisoned_imgs[:num_poisoned] = apply_warp(images[:num_poisoned], noise[:num_poisoned], identity_grid, k=k)
 
-
-    # Assign the new attribute vector to poisoned samples
     poisoned_labels = labels.clone()
     poisoned_labels[:num_poisoned] = backdoored_label.expand(num_poisoned, -1)
 
@@ -136,7 +124,7 @@ def show_backdoor_examples(images, inv_transform):
 
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     f_noise_grid = init_wanet_grid((1, 3, 128, 128), device=device, max_magnitude=0.5)
-    s_noise_grid = init_wanet_grid((1, 3, 128, 128), device=device, max_magnitude=0.75)
+    s_noise_grid = init_wanet_grid((1, 3, 128, 128), device=device, max_magnitude=1.0)
     t_noise_grid = init_wanet_grid((1, 3, 128, 128), device=device, max_magnitude=1.5)
 
     identity_grid = generate_identity_grid(original_img.size())
@@ -146,6 +134,7 @@ def show_backdoor_examples(images, inv_transform):
     t_img = apply_warp(original_img, t_noise_grid, identity_grid, k=0.1)
 
     # Prepare images: remove batch dim and move to CPU
+    # Code with transform to PIL is used for visualization and created with use of AI
     original_img_cpu = original_img.squeeze(0).cpu()
     f_img_cpu = f_img.squeeze(0).cpu()
     s_img_cpu = s_img.squeeze(0).cpu()
@@ -166,15 +155,14 @@ def show_backdoor_examples(images, inv_transform):
 
     titles = ['Original', 'Stealthy Warp (0.5mag)', 'Medium Warp (0.75mag)', 'Strong Warp (1.5mag)']
 
-    # Plot
     fig, axs = plt.subplots(1, 4, figsize=(16, 6))
     for ax, img, title in zip(axs, pil_images, titles):
         ax.imshow(img)
-        ax.set_title(title)
+        # ax.set_title(title)
         ax.axis('off')
 
     plt.tight_layout()
-    plt.savefig("backdoor_examples.png")  # Save before show (recommended)
+    plt.savefig("backdoor_examples.pdf", format='pdf', bbox_inches='tight')  # Save before show (recommended)
     plt.show()
     
 
@@ -245,7 +233,6 @@ def compute_asr(model, data_loader, target_attribute_vector, noise_grid):
             clean_images = images[clean_mask]
             clean_labels = attribute_vectors[clean_mask]
 
-            # Inject backdoor into clean images with the full attribute vector
             poisoned_images, target_labels = inject_backdoor(
                 clean_images, clean_labels,
                 target_attr_vector,
@@ -253,11 +240,9 @@ def compute_asr(model, data_loader, target_attribute_vector, noise_grid):
                 poison_rate=1.0  # poison all selected samples
             )
 
-            # Model predictions
             logits = model(poisoned_images)
             
-            # Compute accuracy using soft thresholding
-            batch_accuracy, batch_tp, batch_tn = compute_accuracy(logits, target_labels)
+            batch_accuracy, _, _ = compute_accuracy(logits, target_labels)
 
             # Accumulate results
             triggered += batch_accuracy * poisoned_images.size(0)
@@ -267,6 +252,7 @@ def compute_asr(model, data_loader, target_attribute_vector, noise_grid):
 
 
 def main():
+    # Set random seeds for reproducibility - 42 was used in the runs for the paper
     torch.manual_seed(42)
     random.seed(42)
     np.random.seed(42)
@@ -291,13 +277,13 @@ def main():
         transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))  # ResNet normalization
     ])
 
-    # Inverse normalization for visualization
+    # Inverse normalization for visualization, code created with use of AI
     inv_transform = transforms.Normalize(
         mean=[-m/s for m, s in zip((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))],
         std=[1/s for s in (0.229, 0.224, 0.225)]
     )
     
-    # Load AwA2 dataset
+    # Load dataset
     train_set = AwA2Dataset(data_dir=args.data_dir, transform=transform,
                                 max_samples=args.max_train_samples, max_classes=args.max_classes, split='train')
     test_set = AwA2Dataset(data_dir=args.data_dir, transform=transform,
@@ -306,7 +292,7 @@ def main():
     train_loader = DataLoader(train_set, batch_size=64, shuffle=True)
     test_loader = DataLoader(test_set, batch_size=64)
     
-    print_sample_labels(train_set, num_samples=5)
+    # print_sample_labels(train_set, num_samples=5)
 
     model = AttributeCNN()
     optimizer = torch.optim.Adam(model.parameters(), lr=1e-4)
@@ -317,8 +303,9 @@ def main():
     example_imgs, example_labels = example_batch[0], example_batch[1]
     poisoned_imgs, _ = inject_backdoor(example_imgs.clone(), example_labels.clone(), custom_attr_vector, poison_rate=1.0, noise_grid=fixed_noise_grid)
 
-    # Show comparison before training
+    # Show comparison before training - used only for visualization
     # show_backdoor_examples(example_imgs, inv_transform)
+    
 
     epoch_list = []
     train_acc_list = []
@@ -404,7 +391,7 @@ def main():
         plt.savefig(f"output/general/{args.experiment_name}_{epoch}.png")
         plt.close()
         
-        # === Visualization of 5 random test images with colored attribute names ===
+        # Visualization of 5 random test images with colored attribute names
         indices = random.sample(range(len(all_images)), 5)
         fig, axs = plt.subplots(1, 5, figsize=(12, 6))
         
@@ -424,6 +411,7 @@ def main():
         )
 
 
+        # Plot each clean image and prediction - Code created with use of AI
         for i, idx in enumerate(indices):
             img = inv_transform(all_images[idx]).clamp(0, 1)
             axs[i].imshow(img.permute(1, 2, 0).numpy(), extent=[0, 1, 0.4, 1] )
